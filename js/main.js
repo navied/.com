@@ -9,16 +9,16 @@ $(document).on('input click', "[data-behavior~=input-selected]", function() {
 $(document).on('input click', "[data-behavior~=question-me]", function() {
 	$("#question-body").show();
 	$("#answer-body").hide();
-	$("#question-div i").removeClass('fa-question-circle-o');
-	$("#question-div i").addClass("fa-arrow-circle-o-left");
+	$("#question-div i").removeClass('icon-help');
+	$("#question-div i").addClass("icon-arrow_back");
 	$("#question-div").attr("data-behavior", "answer-me");
 });
 
 $(document).on('input click', "[data-behavior~=answer-me]", function() {
 	$("#question-body").hide();
 	$("#answer-body").show();
-	$("#question-div i").addClass('fa-question-circle-o');
-	$("#question-div i").removeClass("fa-arrow-circle-o-left");
+	$("#question-div i").addClass('icon-help');
+	$("#question-div i").removeClass("icon-arrow_back");
 	$("#question-div").attr("data-behavior", "question-me");
 });
 
