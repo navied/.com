@@ -261,6 +261,7 @@ body {
 #answer-body{
   height: 100%;
   position: relative;
+  overflow-x: hidden;
 }
 
 #answer-body p {
