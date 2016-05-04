@@ -35,7 +35,6 @@ body {
     height: 100vh;
     background-image: linear-gradient(-225deg, #090D24 0%, #0A0B05 100%);
     font-family: 'Open Sans', sans-serif;
-    overflow-x: hidden;
 }
 
 .glitch {
