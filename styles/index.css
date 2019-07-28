@@ -1,0 +1,83 @@
+body {
+  background-color: rgb(40, 42, 53);
+  color: #fff;
+  font-family: "Source Code Pro", monospace;
+  padding: 0;
+  margin: 0;
+  background-size: cover;
+  background-repeat: no-repeat;
+  font-weight: 500;
+}
+div {
+  font-weight: 500;
+  font-size: 17px;
+  display: inline;
+}
+
+a {
+  color: rgb(99, 169, 213);
+}
+
+.dollar-input {
+  color: rgb(237, 117, 190);
+  font-weight: 500;
+}
+
+ul {
+  list-style: none;
+}
+
+p {
+  font-size: 15px;
+  color: #fff;
+  margin-top: 5px;
+  margin-bottom: 0;
+}
+
+span {
+  color: #fff;
+  font-weight: 300;
+}
+
+.dollar {
+  color: #ffffff;
+  font-weight: 500;
+  display: inline;
+}
+
+.home-files {
+  color: rgb(114, 194, 245);
+  font-weight: 300;
+  padding-bottom: 5px;
+  display: block;
+}
+
+.aboutme {
+  font-weight: 500;
+  color: rgb(114, 194, 245);
+  margin-top: 5px;
+  display: inline-block;
+}
+
+a:hover {
+  opacity: 0.5;
+}
+.cmd {
+  color: rgb(136, 242, 152);
+  font-weight: 500;
+}
+
+.blink {
+  animation: blink-animation 1s steps(5, start) infinite;
+  -webkit-animation: blink-animation 1s steps(5, start) infinite;
+}
+@keyframes blink-animation {
+  to {
+    visibility: hidden;
+  }
+}
+@-webkit-keyframes blink-animation {
+  to {
+    visibility: hidden;
+  }
+}
