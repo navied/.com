@@ -181,26 +181,6 @@
       font-size: 12px;
     }
 
-    .safeframe-shell {
-      position: relative;
-      width: 160px;
-      height: 600px;
-    }
-
-    .safeframe-shell iframe {
-      width: 160px;
-      height: 600px;
-    }
-
-    .ad-click-layer {
-      position: absolute;
-      inset: 0;
-      z-index: 2;
-      display: block;
-      cursor: pointer;
-      background: transparent;
-    }
-
     .controls {
       margin-top: 40px;
       border-top: 1px solid #ddd;
@@ -379,8 +359,8 @@
           </a>
         </div>
         <div class="note">
-          The ad slots above load the creative normally, but clicks are handled by a
-          publisher/SafeFrame-style top-navigation layer.
+          The ad slots above render a SafeFrame-style creative using the real click endpoint
+          with user-activated top-frame navigation.
         </div>
       </section>
     </article>
@@ -412,21 +392,177 @@
   </div>
 
   <script>
-    const CREATIVE_URL =
-      "https://shop3p.com/creative?d=dus9-RE7sc3srltBqm1my4MxO2jYxAyiUoqmPMHePM-PkdziYSuwGdzbtsUaD7WLEuhTPch3PulomnoCdj0P-POU5BE7_xPuAdGAlWXLrVYLe6fQ_svbs_Gx-hVdpnz6pXtrMGYVYq3GQMLO2hvql33BNZR_xB1ifUX8CoMaBEpmNc7eWpkNwv6osee6dvhIRWbhqGuKbJLfXOLKe1qyJyaLqG5gSp6A-q24qwUO-wYuYUcfkvIvDr4tZBsu_aUNmaR8dObah8-m157eSoCc4FjEJ3T0xQjZ8gBUk6kdCvKtJfIZ4j7s-YA8xkYiTBqnkZnEy7THnNnU_RmERl8Oeku_KyZj1YwydYKY0hBKFzH00h2mL6HVj-mhUAEjlzSM9L3Ff8VphAro9ztjdyUWLADIlT3qnUE&size=banner160x600&test=true";
+    const CLICK_URL =
+      "https://shop3p.com/click?d=04v_L_EhI5vnEF8s3l1XNcB1PhsMyrOGbrIJmgXSfHHhCU5Fl2ro5B-MiIrjwgxMi_AfjJcC-Jg3WWXB47qS22SmBDNzgwBhxVJaNUl63vYcCRR92IBE1hIcC1StEGDZnnf1XS10-NFY6k5sAjXOdeyTx6kK3uGttcZvsBioUCHRf2817wI8A1Cc9vZ0xHBFa55QZnFo-M5wZXgcRjQPrYS4vu60RJhyXObRECn5jmd8Inkfw6dlpAa6ySkTdFDSuUAJzipwr3VxlmGvtawkbHa4UAVFvI3-WJR2EPBU8ulE-Uluv4F5BCSVUnSjdVQhY3Tdhod1iUhH_pVz4xCUmjA8W0qKqbHRh5X4cj1yvxrj8fztfdGhOTcjwypE6vxKw5sRvq0z9Khp--ZwDP8ipCu_skuNOwM&test=true";
 
-    const AD_SANDBOX =
-      "allow-scripts allow-same-origin allow-forms allow-popups allow-popups-to-escape-sandbox";
+    const IMPRESSION_URL =
+      "https://shop3p.com/impression?d=04v_L_EhI5vnEF8s3l1XNcB1PhsMyrOGbrIJmgXSfHHhCU5Fl2ro5B-MiIrjwgxMi_AfjJcC-Jg3WWXB47qS22SmBDNzgwBhxVJaNUl63vYcCRR92IBE1hIcC1StEGDZnnf1XS10-NFY6k5sAjXOdeyTx6kK3uGttcZvsBioUCHRf2817wI8A1Cc9vZ0xHBFa55QZnFo-M5wZXgcRjQPrYS4vu60RJhyXObRECn5jmd8Inkfw6dlpAa6ySkTdFDSuUAJzipwr3VxlmGvtawkbHa4UAVFvI3-WJR2EPBU8ulE-Uluv4F5BCSVUnSjdVQhY3Tdhod1iUhH_pVz4xCUmjA8W0qKqbHRh5X4cj1yvxrj8fztfdGhOTcjwypE6vxKw5sRvq0z9Khp--ZwDP8ipCu_skuNOwM&test=true&size=banner160x600";
+
+    const SAFEFRAME_SANDBOX =
+      "allow-scripts allow-same-origin allow-forms allow-popups allow-popups-to-escape-sandbox allow-top-navigation-by-user-activation";
+
+    function adDocument() {
+      return `
+        <!doctype html>
+        <html lang="en">
+        <head>
+          <meta charset="utf-8">
+          <style>
+            * {
+              box-sizing: border-box;
+            }
+
+            html,
+            body {
+              width: 160px;
+              height: 600px;
+              margin: 0;
+              overflow: hidden;
+              font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            }
+
+            a {
+              display: block;
+              width: 160px;
+              height: 600px;
+              color: inherit;
+              text-decoration: none;
+            }
+
+            .creative {
+              display: flex;
+              flex-direction: column;
+              width: 160px;
+              height: 600px;
+              border: 1px solid #e1e4e5;
+              background: #fff;
+              transition: box-shadow 120ms ease;
+            }
+
+            .creative:hover {
+              box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+            }
+
+            .top {
+              display: flex;
+              justify-content: center;
+              padding: 24px 12px;
+            }
+
+            .top img {
+              width: 59px;
+              height: 24px;
+            }
+
+            .image {
+              display: flex;
+              flex: 1;
+              align-items: center;
+              justify-content: center;
+              padding: 24px 8px;
+              min-height: 0;
+            }
+
+            .image img {
+              max-width: 136px;
+              max-height: 280px;
+              object-fit: contain;
+            }
+
+            .bottom {
+              display: flex;
+              flex-direction: column;
+              gap: 8px;
+              padding: 12px;
+              text-align: center;
+            }
+
+            .brand {
+              color: #000;
+              font-size: 12px;
+              line-height: 16px;
+            }
+
+            .title {
+              overflow: hidden;
+              color: #000;
+              font-size: 12px;
+              font-weight: 600;
+              line-height: 16px;
+              text-overflow: ellipsis;
+              white-space: nowrap;
+            }
+
+            .price {
+              display: flex;
+              justify-content: center;
+              gap: 4px;
+              font-size: 12px;
+              line-height: 16px;
+            }
+
+            .current {
+              font-weight: 600;
+            }
+
+            .compare {
+              color: #a6a8a9;
+              text-decoration: line-through;
+            }
+
+            .cta {
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              height: 40px;
+              border-radius: 999px;
+              background: #5433eb;
+              color: #fff;
+              font-size: 14px;
+              font-weight: 600;
+            }
+          </style>
+        </head>
+
+        <body>
+          <a href="${CLICK_URL}" target="_top" aria-label="Shop Resilia Oil Of Oregano Softgels">
+            <div class="creative">
+              <div class="top">
+                <img src="https://shop3p.com/assets/shop-logo.svg" alt="Shop">
+              </div>
+
+              <div class="image">
+                <img
+                  src="https://cdn.shop3p.com/s/files/1/0779/0673/9384/files/oldcorrect_prod_image-Photoroom1-ezgif.com-webp-to-jpg-converter.jpg?width=272"
+                  alt="Resilia Oil Of Oregano Softgels"
+                >
+              </div>
+
+              <div class="bottom">
+                <div class="brand">Resilia</div>
+                <div class="title">Resilia Oil Of Oregano Softgels</div>
+                <div class="price">
+                  <span class="current">$39.99</span>
+                  <span class="compare">$59.99</span>
+                </div>
+                <div class="cta">Shop now</div>
+              </div>
+            </div>
+          </a>
+
+          <script>
+            new Image().src = "${IMPRESSION_URL}";
+          <\/script>
+        </body>
+        </html>
+      `;
+    }
 
     function fillAdSlot(slot) {
       if (slot.dataset.filled === "true") return;
 
       const container = slot.querySelector(".gpt-container");
-      const shell = document.createElement("div");
       const iframe = document.createElement("iframe");
-      const clickLayer = document.createElement("a");
-
-      shell.className = "safeframe-shell";
 
       iframe.id = slot.dataset.frameId;
       iframe.title = "Ad content";
@@ -434,21 +570,15 @@
       iframe.setAttribute("scrolling", "no");
       iframe.setAttribute("width", "160");
       iframe.setAttribute("height", "600");
-      iframe.setAttribute("sandbox", AD_SANDBOX);
-      iframe.src = CREATIVE_URL;
+      iframe.setAttribute("sandbox", SAFEFRAME_SANDBOX);
+      iframe.srcdoc = adDocument();
 
-      clickLayer.className = "ad-click-layer";
-      clickLayer.href = CREATIVE_URL;
-      clickLayer.target = "_top";
-      clickLayer.setAttribute("aria-label", "Open advertiser destination");
-
-      shell.append(iframe, clickLayer);
-      container.replaceChildren(shell);
+      container.replaceChildren(iframe);
       slot.dataset.filled = "true";
     }
 
     document.querySelectorAll("[data-creative-link]").forEach((link) => {
-      link.href = CREATIVE_URL;
+      link.href = CLICK_URL;
     });
 
     document.querySelectorAll("[data-eager]").forEach(fillAdSlot);
