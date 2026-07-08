@@ -380,7 +380,7 @@
         </div>
         <div class="note">
           The ad slots above render the creative in an iframe, while a publisher/SafeFrame-style
-          top-document click layer handles the real click endpoint.
+          top-document click layer handles the real click endpoint in the current browsing context.
         </div>
       </section>
     </article>
@@ -442,8 +442,7 @@
 
       clickLayer.className = "ad-click-layer";
       clickLayer.href = CLICK_URL;
-      clickLayer.target = "_blank";
-      clickLayer.rel = "noopener";
+      clickLayer.target = "_self";
       clickLayer.setAttribute("aria-label", "Open advertiser destination");
 
       shell.append(iframe, clickLayer);
