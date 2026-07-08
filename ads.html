@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>The Daily Skimmer - SafeFrame Ad Deep-Link Test</title>
+  <title>The Daily Skimmer - Ad Deep-Link Test</title>
 
   <style>
     * {
@@ -43,7 +43,6 @@
 
     .logo {
       justify-self: center;
-      font-family: Georgia, "Times New Roman", serif;
       font-size: 30px;
       font-weight: 700;
       letter-spacing: -0.04em;
@@ -75,6 +74,11 @@
     .topic-bar a {
       color: #181818;
       text-decoration: none;
+    }
+
+    .masthead-ad {
+      min-height: 306px;
+      border-bottom: 1px solid #ddd;
     }
 
     .article-shell {
@@ -177,6 +181,26 @@
       font-size: 12px;
     }
 
+    .safeframe-shell {
+      position: relative;
+      width: 160px;
+      height: 600px;
+    }
+
+    .safeframe-shell iframe {
+      width: 160px;
+      height: 600px;
+    }
+
+    .ad-click-layer {
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      display: block;
+      cursor: pointer;
+      background: transparent;
+    }
+
     .controls {
       margin-top: 40px;
       border-top: 1px solid #ddd;
@@ -255,6 +279,22 @@
     <a href="#">Lifestyle</a>
     <a href="#">Money</a>
   </nav>
+
+  <section
+    class="ad-slot masthead-ad"
+    role="presentation"
+    data-ad-slot
+    data-eager
+    data-frame-id="google_ads_iframe_/7175/fdc.skimmer/article/masthead/default/standard_1"
+  >
+    <div class="ad-label">Advertisement</div>
+    <div
+      id="google_ads_iframe_/7175/fdc.skimmer/article/masthead/default/standard_1__container__"
+      class="gpt-container"
+    >
+      <div class="placeholder">Masthead ad slot</div>
+    </div>
+  </section>
 
   <main class="article-shell">
     <article>
@@ -339,7 +379,8 @@
           </a>
         </div>
         <div class="note">
-          The ad slots above use a SafeFrame-style click layer. The direct links are only controls.
+          The ad slots above load the creative normally, but clicks are handled by a
+          publisher/SafeFrame-style top-navigation layer.
         </div>
       </section>
     </article>
@@ -374,90 +415,18 @@
     const CREATIVE_URL =
       "https://shop3p.com/creative?d=dus9-RE7sc3srltBqm1my4MxO2jYxAyiUoqmPMHePM-PkdziYSuwGdzbtsUaD7WLEuhTPch3PulomnoCdj0P-POU5BE7_xPuAdGAlWXLrVYLe6fQ_svbs_Gx-hVdpnz6pXtrMGYVYq3GQMLO2hvql33BNZR_xB1ifUX8CoMaBEpmNc7eWpkNwv6osee6dvhIRWbhqGuKbJLfXOLKe1qyJyaLqG5gSp6A-q24qwUO-wYuYUcfkvIvDr4tZBsu_aUNmaR8dObah8-m157eSoCc4FjEJ3T0xQjZ8gBUk6kdCvKtJfIZ4j7s-YA8xkYiTBqnkZnEy7THnNnU_RmERl8Oeku_KyZj1YwydYKY0hBKFzH00h2mL6HVj-mhUAEjlzSM9L3Ff8VphAro9ztjdyUWLADIlT3qnUE&size=banner160x600&test=true";
 
-    const SAFEFRAME_SANDBOX =
-      "allow-scripts allow-forms allow-popups allow-popups-to-escape-sandbox allow-top-navigation-by-user-activation";
-
-    function escapeAttribute(value) {
-      return value
-        .replaceAll("&", "&")
-        .replaceAll('"', """)
-        .replaceAll("<", "<")
-        .replaceAll(">", ">");
-    }
-
-    function safeFrameDocument() {
-      const url = escapeAttribute(CREATIVE_URL);
-
-      return `
-        <!doctype html>
-        <html lang="en">
-        <head>
-          <meta charset="utf-8">
-          <style>
-            html,
-            body {
-              width: 100%;
-              height: 100%;
-              margin: 0;
-              overflow: hidden;
-              background: transparent;
-            }
-
-            .safeframe {
-              position: relative;
-              display: grid;
-              place-items: center;
-              width: 100%;
-              height: 100%;
-              background: transparent;
-            }
-
-            .creative {
-              width: 160px;
-              height: 600px;
-              border: 0;
-            }
-
-            .click-layer {
-              position: absolute;
-              inset: 0;
-              z-index: 2;
-              display: block;
-              cursor: pointer;
-              background: transparent;
-            }
-          </style>
-        </head>
-        <body>
-          <div class="safeframe">
-            <iframe
-              class="creative"
-              title="Creative preview"
-              aria-hidden="true"
-              tabindex="-1"
-              width="160"
-              height="600"
-              scrolling="no"
-              src="${url}"
-            ></iframe>
-
-            <a
-              class="click-layer"
-              href="${url}"
-              target="_top"
-              aria-label="Open advertiser destination"
-            ></a>
-          </div>
-        </body>
-        </html>
-      `;
-    }
+    const AD_SANDBOX =
+      "allow-scripts allow-same-origin allow-forms allow-popups allow-popups-to-escape-sandbox";
 
     function fillAdSlot(slot) {
       if (slot.dataset.filled === "true") return;
 
       const container = slot.querySelector(".gpt-container");
+      const shell = document.createElement("div");
       const iframe = document.createElement("iframe");
+      const clickLayer = document.createElement("a");
+
+      shell.className = "safeframe-shell";
 
       iframe.id = slot.dataset.frameId;
       iframe.title = "Ad content";
@@ -465,10 +434,16 @@
       iframe.setAttribute("scrolling", "no");
       iframe.setAttribute("width", "160");
       iframe.setAttribute("height", "600");
-      iframe.setAttribute("sandbox", SAFEFRAME_SANDBOX);
-      iframe.srcdoc = safeFrameDocument();
+      iframe.setAttribute("sandbox", AD_SANDBOX);
+      iframe.src = CREATIVE_URL;
 
-      container.replaceChildren(iframe);
+      clickLayer.className = "ad-click-layer";
+      clickLayer.href = CREATIVE_URL;
+      clickLayer.target = "_top";
+      clickLayer.setAttribute("aria-label", "Open advertiser destination");
+
+      shell.append(iframe, clickLayer);
+      container.replaceChildren(shell);
       slot.dataset.filled = "true";
     }
 
