@@ -3,26 +3,17 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>The Daily Skimmer - Ad Deep-Link Test</title>
+  <title>The Daily Skimmer - SafeFrame Ad Deep-Link Test</title>
 
   <style>
-    :root {
-      --page-bg: #f7f7f5;
-      --text: #181818;
-      --muted: #666;
-      --border: #d9d9d6;
-      --ad-bg: #f1f1ef;
-      --brand: #111;
-    }
-
     * {
       box-sizing: border-box;
     }
 
     body {
       margin: 0;
-      background: var(--page-bg);
-      color: var(--text);
+      background: #f7f7f5;
+      color: #181818;
       font-family: Georgia, "Times New Roman", serif;
       line-height: 1.55;
     }
@@ -32,7 +23,7 @@
       top: 0;
       z-index: 20;
       display: grid;
-      grid-template-columns: 48px 1fr 180px;
+      grid-template-columns: 48px 1fr 160px;
       align-items: center;
       height: 56px;
       border-bottom: 1px solid #000;
@@ -44,7 +35,7 @@
       width: 48px;
       height: 56px;
       border: 0;
-      border-right: 1px solid var(--border);
+      border-right: 1px solid #ddd;
       background: transparent;
       font-size: 22px;
       cursor: pointer;
@@ -52,18 +43,18 @@
 
     .logo {
       justify-self: center;
-      color: var(--brand);
       font-family: Georgia, "Times New Roman", serif;
       font-size: 30px;
       font-weight: 700;
       letter-spacing: -0.04em;
     }
 
-    .header-actions {
+    .header-action {
       justify-self: end;
       padding-right: 16px;
-      color: var(--muted);
+      color: #666;
       font-size: 12px;
+      font-weight: 700;
       text-transform: uppercase;
     }
 
@@ -72,7 +63,7 @@
       justify-content: center;
       gap: 28px;
       height: 34px;
-      border-bottom: 1px solid var(--border);
+      border-bottom: 1px solid #ddd;
       background: #fff;
       font-family: Arial, Helvetica, sans-serif;
       font-size: 12px;
@@ -82,57 +73,8 @@
     }
 
     .topic-bar a {
-      color: var(--text);
+      color: #181818;
       text-decoration: none;
-    }
-
-    .ad-slot {
-      position: relative;
-      background: var(--ad-bg);
-      font-family: Arial, Helvetica, sans-serif;
-      text-align: center;
-    }
-
-    .ad-label {
-      padding: 8px 0 6px;
-      color: #777;
-      font-size: 10px;
-      font-weight: 700;
-      letter-spacing: 0.12em;
-      line-height: 1;
-      text-transform: uppercase;
-    }
-
-    .gpt-container {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin: 0 auto;
-    }
-
-    .ad-placeholder {
-      display: grid;
-      place-items: center;
-      width: 160px;
-      height: 600px;
-      border: 1px dashed #bbb;
-      background: #fafafa;
-      color: #777;
-      font-size: 12px;
-    }
-
-    iframe {
-      display: block;
-      border: 0;
-    }
-
-    .masthead-ad {
-      min-height: 306px;
-      border-bottom: 1px solid var(--border);
-    }
-
-    .masthead-ad .gpt-container {
-      min-height: 282px;
     }
 
     .article-shell {
@@ -142,10 +84,6 @@
       max-width: 1120px;
       margin: 0 auto;
       padding: 44px 24px 80px;
-    }
-
-    article {
-      min-width: 0;
     }
 
     .section {
@@ -175,10 +113,10 @@
 
     .byline {
       margin-bottom: 28px;
-      border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
+      border-top: 1px solid #ddd;
+      border-bottom: 1px solid #ddd;
       padding: 12px 0;
-      color: var(--muted);
+      color: #666;
       font-family: Arial, Helvetica, sans-serif;
       font-size: 13px;
     }
@@ -188,49 +126,60 @@
       font-size: 20px;
     }
 
+    iframe {
+      display: block;
+      border: 0;
+    }
+
+    .ad-slot {
+      background: #f1f1ef;
+      font-family: Arial, Helvetica, sans-serif;
+      text-align: center;
+    }
+
+    .ad-label {
+      padding: 8px 0 6px;
+      color: #777;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      line-height: 1;
+      text-transform: uppercase;
+    }
+
+    .gpt-container {
+      display: flex;
+      justify-content: center;
+      margin: 0 auto;
+    }
+
     .inline-ad {
       width: 100vw;
       margin: 36px 0 40px calc(50% - 50vw);
-      border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
+      border-top: 1px solid #ddd;
+      border-bottom: 1px solid #ddd;
       padding-bottom: 20px;
-    }
-
-    .inline-ad .gpt-container {
-      min-height: 282px;
-    }
-
-    .rail {
-      min-width: 0;
     }
 
     .rail-ad {
       position: sticky;
       top: 92px;
-      padding-bottom: 10px;
+      padding-bottom: 12px;
     }
 
-    .rail-ad .gpt-container {
-      width: 300px;
-      min-height: 620px;
-    }
-
-    .medianet-wrapper {
-      margin: 36px auto;
-      padding: 0 32px 20px;
-      border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
-      background: var(--ad-bg);
-      font-family: Arial, Helvetica, sans-serif;
-    }
-
-    .medianet-wrapper .gpt-container {
-      min-height: 90px;
+    .placeholder {
+      display: grid;
+      place-items: center;
+      width: 160px;
+      height: 600px;
+      border: 1px dashed #bbb;
+      color: #777;
+      font-size: 12px;
     }
 
     .controls {
       margin-top: 40px;
-      border-top: 1px solid var(--border);
+      border-top: 1px solid #ddd;
       padding-top: 24px;
       font-family: Arial, Helvetica, sans-serif;
     }
@@ -266,7 +215,7 @@
         grid-template-columns: 48px 1fr 80px;
       }
 
-      .header-actions {
+      .header-action {
         font-size: 0;
       }
 
@@ -281,16 +230,9 @@
         padding: 32px 18px 64px;
       }
 
-      .rail {
-        margin-top: 36px;
-      }
-
       .rail-ad {
         position: static;
-      }
-
-      .rail-ad .gpt-container {
-        width: 100%;
+        margin-top: 36px;
       }
 
       p {
@@ -304,7 +246,7 @@
   <header class="site-header">
     <button class="menu-button" type="button" aria-label="Open navigation menu">☰</button>
     <div class="logo">The Daily Skimmer</div>
-    <div class="header-actions">Subscribe</div>
+    <div class="header-action">Subscribe</div>
   </header>
 
   <nav class="topic-bar" aria-label="Sections">
@@ -312,152 +254,113 @@
     <a href="#">Innovation</a>
     <a href="#">Lifestyle</a>
     <a href="#">Money</a>
-    <a href="#">Opinion</a>
   </nav>
 
-  <main>
-    <section
-      class="ad-slot masthead-ad"
-      role="presentation"
-      data-eager-ad
-      data-frame-id="google_ads_iframe_/7175/fdc.skimmer/article/masthead/default/standard_1"
-      data-container-id="google_ads_iframe_/7175/fdc.skimmer/article/masthead/default/standard_1__container__"
-      data-sandbox="with-top-nav"
-    >
-      <div class="ad-label">Advertisement</div>
-      <div
-        id="google_ads_iframe_/7175/fdc.skimmer/article/masthead/default/standard_1__container__"
-        class="gpt-container"
-      >
-        <div class="ad-placeholder">GPT slot pending</div>
+  <main class="article-shell">
+    <article>
+      <div class="section">Urban Wildlife</div>
+
+      <h1>Local Raccoon Reportedly "Just Vibing" In Recycling Bin</h1>
+
+      <p class="dek">
+        Witnesses described the animal as calm, focused, and apparently unfazed by the growing
+        media attention.
+      </p>
+
+      <div class="byline">
+        By Staff Writer · Updated 11:40 PM · 4 min read
       </div>
-    </section>
 
-    <div class="article-shell">
-      <article>
-        <div class="section">Urban Wildlife</div>
+      <p>
+        In a development that has captivated no one of consequence, a neighborhood raccoon was
+        spotted reclining in a blue recycling bin, described by witnesses as "unbothered."
+      </p>
 
-        <h1>Local Raccoon Reportedly "Just Vibing" In Recycling Bin</h1>
+      <p>
+        "He looked at me like I was the one trespassing," said one resident. Authorities have
+        declined to intervene, citing the animal's extremely relatable energy.
+      </p>
 
-        <p class="dek">
-          Witnesses described the animal as calm, focused, and apparently unfazed by the
-          growing media attention.
-        </p>
-
-        <div class="byline">
-          By Staff Writer · Updated 11:40 PM · 4 min read
+      <section
+        class="ad-slot inline-ad"
+        role="presentation"
+        data-ad-slot
+        data-lazy
+        data-frame-id="google_ads_iframe_/7175/fdc.skimmer/article/masthead/default/standard_3"
+      >
+        <div class="ad-label">Advertisement</div>
+        <div
+          id="google_ads_iframe_/7175/fdc.skimmer/article/masthead/default/standard_3__container__"
+          class="gpt-container"
+        >
+          <div class="placeholder">Lazy SafeFrame slot</div>
         </div>
+      </section>
 
-        <p>
-          In a development that has captivated no one of consequence, a neighborhood raccoon was
-          spotted reclining in a blue recycling bin, described by witnesses as "unbothered" and
-          "living his truth."
-        </p>
+      <p>
+        Experts remind readers that raccoons are wild animals and should not be offered snacks,
+        no matter how polite they appear or how good their posture is.
+      </p>
 
-        <p>
-          "He looked at me like I was the one trespassing," said one resident. Authorities have
-          declined to intervene, citing the animal's extremely relatable energy and a lack of any
-          actual crime.
-        </p>
+      <p>
+        The raccoon reportedly spent several minutes inspecting a cardboard box before returning
+        to the bin, where it appeared to consider a long-term tenancy.
+      </p>
 
-        <section
-          class="ad-slot inline-ad"
-          role="presentation"
-          data-lazy-ad
-          data-frame-id="google_ads_iframe_/7175/fdc.skimmer/article/masthead/default/standard_3"
-          data-container-id="google_ads_iframe_/7175/fdc.skimmer/article/masthead/default/standard_3__container__"
-          data-sandbox="with-top-nav"
+      <section
+        class="ad-slot inline-ad"
+        role="presentation"
+        data-ad-slot
+        data-lazy
+        data-frame-id="google_ads_iframe_/7175/fdc.skimmer/article/masthead/default/standard_6"
+      >
+        <div class="ad-label">Advertisement</div>
+        <div
+          id="google_ads_iframe_/7175/fdc.skimmer/article/masthead/default/standard_6__container__"
+          class="gpt-container"
         >
-          <div class="ad-label">Advertisement</div>
-          <div
-            id="google_ads_iframe_/7175/fdc.skimmer/article/masthead/default/standard_3__container__"
-            class="gpt-container"
-          >
-            <div class="ad-placeholder">Lazy SafeFrame slot</div>
-          </div>
-        </section>
+          <div class="placeholder">Lazy SafeFrame slot</div>
+        </div>
+      </section>
 
-        <p>
-          Experts remind readers that raccoons are wild animals and should not be offered snacks,
-          no matter how polite they appear or how good their posture is.
-        </p>
+      <p>
+        At press time, the raccoon had relocated to a nearby porch, where it was said to be
+        reviewing its options.
+      </p>
 
-        <p>
-          The raccoon reportedly spent several minutes inspecting a cardboard box before returning
-          to the bin, where it appeared to consider a long-term tenancy.
-        </p>
+      <section class="controls">
+        <strong>Control links outside the ad frame</strong>
+        <div>
+          <a class="control-link" data-creative-link target="_top">
+            Direct target="_top"
+          </a>
+          <a class="control-link" data-creative-link target="_blank" rel="noopener">
+            Direct target="_blank"
+          </a>
+        </div>
+        <div class="note">
+          The ad slots above use a SafeFrame-style click layer. The direct links are only controls.
+        </div>
+      </section>
+    </article>
 
-        <section class="medianet-wrapper">
-          <div class="ad-label">Advertisement</div>
-          <div class="gpt-container">
-            <div class="note">
-              Native/Media.net-style wrapper. Real publisher pages often reserve these wrappers
-              before a network decides whether to fill them.
-            </div>
-          </div>
-        </section>
-
-        <p>
-          Neighbors said the animal has become something of a local celebrity, though several
-          stressed that fame has not changed him.
-        </p>
-
-        <section
-          class="ad-slot inline-ad"
-          role="presentation"
-          data-lazy-ad
-          data-frame-id="google_ads_iframe_/7175/fdc.skimmer/article/masthead/default/standard_6"
-          data-container-id="google_ads_iframe_/7175/fdc.skimmer/article/masthead/default/standard_6__container__"
-          data-sandbox="without-top-nav"
+    <aside aria-label="Right rail">
+      <section
+        class="ad-slot rail-ad"
+        role="presentation"
+        data-ad-slot
+        data-eager
+        data-frame-id="google_ads_iframe_/7175/fdc.skimmer/article/right-rail/default/standard_2"
+      >
+        <div class="ad-label">Advertisement</div>
+        <div
+          id="google_ads_iframe_/7175/fdc.skimmer/article/right-rail/default/standard_2__container__"
+          class="gpt-container"
         >
-          <div class="ad-label">Advertisement</div>
-          <div
-            id="google_ads_iframe_/7175/fdc.skimmer/article/masthead/default/standard_6__container__"
-            class="gpt-container"
-          >
-            <div class="ad-placeholder">No top-nav permission</div>
-          </div>
-        </section>
-
-        <p>
-          At press time, the raccoon had relocated to a nearby porch, where it was said to be
-          reviewing its options.
-        </p>
-
-        <section class="controls">
-          <strong>Direct navigation controls</strong>
-          <div>
-            <a class="control-link" data-creative-link target="_top">Open with target="_top"</a>
-            <a class="control-link" data-creative-link target="_blank" rel="noopener">
-              Open with target="_blank"
-            </a>
-          </div>
-          <div class="note">
-            These controls are intentionally outside an iframe. The ad slots above are the more
-            realistic cases.
-          </div>
-        </section>
-      </article>
-
-      <aside class="rail" aria-label="Right rail">
-        <section
-          class="ad-slot rail-ad"
-          role="presentation"
-          data-eager-ad
-          data-frame-id="google_ads_iframe_/7175/fdc.skimmer/article/right-rail/default/standard_2"
-          data-container-id="google_ads_iframe_/7175/fdc.skimmer/article/right-rail/default/standard_2__container__"
-          data-sandbox="with-top-nav"
-        >
-          <div class="ad-label">Advertisement</div>
-          <div
-            id="google_ads_iframe_/7175/fdc.skimmer/article/right-rail/default/standard_2__container__"
-            class="gpt-container"
-          >
-            <div class="ad-placeholder">Sticky rail slot</div>
-          </div>
-        </section>
-      </aside>
-    </div>
+          <div class="placeholder">Sticky rail slot</div>
+        </div>
+      </section>
+    </aside>
   </main>
 
   <div class="housekeeping" aria-hidden="true">
@@ -471,11 +374,84 @@
     const CREATIVE_URL =
       "https://shop3p.com/creative?d=dus9-RE7sc3srltBqm1my4MxO2jYxAyiUoqmPMHePM-PkdziYSuwGdzbtsUaD7WLEuhTPch3PulomnoCdj0P-POU5BE7_xPuAdGAlWXLrVYLe6fQ_svbs_Gx-hVdpnz6pXtrMGYVYq3GQMLO2hvql33BNZR_xB1ifUX8CoMaBEpmNc7eWpkNwv6osee6dvhIRWbhqGuKbJLfXOLKe1qyJyaLqG5gSp6A-q24qwUO-wYuYUcfkvIvDr4tZBsu_aUNmaR8dObah8-m157eSoCc4FjEJ3T0xQjZ8gBUk6kdCvKtJfIZ4j7s-YA8xkYiTBqnkZnEy7THnNnU_RmERl8Oeku_KyZj1YwydYKY0hBKFzH00h2mL6HVj-mhUAEjlzSM9L3Ff8VphAro9ztjdyUWLADIlT3qnUE&size=banner160x600&test=true";
 
-    const SANDBOX_WITH_TOP_NAV =
-      "allow-scripts allow-popups allow-popups-to-escape-sandbox allow-top-navigation-by-user-activation allow-forms";
+    const SAFEFRAME_SANDBOX =
+      "allow-scripts allow-forms allow-popups allow-popups-to-escape-sandbox allow-top-navigation-by-user-activation";
 
-    const SANDBOX_WITHOUT_TOP_NAV =
-      "allow-scripts allow-popups allow-popups-to-escape-sandbox allow-forms";
+    function escapeAttribute(value) {
+      return value
+        .replaceAll("&", "&")
+        .replaceAll('"', """)
+        .replaceAll("<", "<")
+        .replaceAll(">", ">");
+    }
+
+    function safeFrameDocument() {
+      const url = escapeAttribute(CREATIVE_URL);
+
+      return `
+        <!doctype html>
+        <html lang="en">
+        <head>
+          <meta charset="utf-8">
+          <style>
+            html,
+            body {
+              width: 100%;
+              height: 100%;
+              margin: 0;
+              overflow: hidden;
+              background: transparent;
+            }
+
+            .safeframe {
+              position: relative;
+              display: grid;
+              place-items: center;
+              width: 100%;
+              height: 100%;
+              background: transparent;
+            }
+
+            .creative {
+              width: 160px;
+              height: 600px;
+              border: 0;
+            }
+
+            .click-layer {
+              position: absolute;
+              inset: 0;
+              z-index: 2;
+              display: block;
+              cursor: pointer;
+              background: transparent;
+            }
+          </style>
+        </head>
+        <body>
+          <div class="safeframe">
+            <iframe
+              class="creative"
+              title="Creative preview"
+              aria-hidden="true"
+              tabindex="-1"
+              width="160"
+              height="600"
+              scrolling="no"
+              src="${url}"
+            ></iframe>
+
+            <a
+              class="click-layer"
+              href="${url}"
+              target="_top"
+              aria-label="Open advertiser destination"
+            ></a>
+          </div>
+        </body>
+        </html>
+      `;
+    }
 
     function fillAdSlot(slot) {
       if (slot.dataset.filled === "true") return;
@@ -489,13 +465,8 @@
       iframe.setAttribute("scrolling", "no");
       iframe.setAttribute("width", "160");
       iframe.setAttribute("height", "600");
-      iframe.setAttribute(
-        "sandbox",
-        slot.dataset.sandbox === "without-top-nav"
-          ? SANDBOX_WITHOUT_TOP_NAV
-          : SANDBOX_WITH_TOP_NAV
-      );
-      iframe.src = CREATIVE_URL;
+      iframe.setAttribute("sandbox", SAFEFRAME_SANDBOX);
+      iframe.srcdoc = safeFrameDocument();
 
       container.replaceChildren(iframe);
       slot.dataset.filled = "true";
@@ -505,7 +476,7 @@
       link.href = CREATIVE_URL;
     });
 
-    document.querySelectorAll("[data-eager-ad]").forEach(fillAdSlot);
+    document.querySelectorAll("[data-eager]").forEach(fillAdSlot);
 
     const observer = new IntersectionObserver(
       (entries) => {
@@ -517,13 +488,12 @@
         });
       },
       {
-        root: null,
         rootMargin: "600px 0px",
         threshold: 0.01
       }
     );
 
-    document.querySelectorAll("[data-lazy-ad]").forEach((slot) => {
+    document.querySelectorAll("[data-lazy]").forEach((slot) => {
       observer.observe(slot);
     });
   </script>
